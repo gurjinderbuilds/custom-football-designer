@@ -302,7 +302,7 @@ export default function Editor2D() {
                     textAnchor="middle"
                     fill={isSelected ? '#ffffff' : isHex ? '#0f172a' : '#f8fafc'}
                     fontSize="11"
-                    fontFamily="monospace"
+                    fontFamily="'JetBrains Mono', monospace"
                     fontWeight="700"
                     style={{
                       textShadow: '0 1px 3px rgba(0,0,0,0.85)',
