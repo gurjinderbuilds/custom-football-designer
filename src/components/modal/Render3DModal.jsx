@@ -1,33 +1,23 @@
 import { useRef, useState } from 'react'
-import {
-  X,
-  Download,
-  Layers
-} from 'lucide-react'
+import { Download, Check, X } from 'lucide-react'
 import FootballCanvas from '../editor3d/FootballCanvas'
 import FootballControls from '../editor3d/FootballControls'
-import { useCustomization } from '../../context/CustomizationContext'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose
+} from '../ui/dialog'
+import { Button } from '../ui/button'
+import { Badge } from '../ui/badge'
 
 export default function Render3DModal({ isOpen, onClose }) {
-  const {
-    selectedPanels,
-    uploadedImage,
-    colorSettings,
-    selectionMode,
-    PANELS_DATA
-  } = useCustomization()
-
   const canvasRef = useRef(null)
   const [isAutoRotating, setIsAutoRotating] = useState(true)
   const [isWireframe, setIsWireframe] = useState(false)
   const [downloadSuccess, setDownloadSuccess] = useState(false)
-
-  if (!isOpen) return null
-
-  const isSingle = selectionMode === 'single'
-  const activePanelTitle = selectedPanels.length > 0
-    ? PANELS_DATA.find((p) => p.id === selectedPanels[0])?.title || selectedPanels[0]
-    : null
 
   const handleDownloadSnapshot = () => {
     if (!canvasRef.current) return
@@ -46,50 +36,70 @@ export default function Render3DModal({ isOpen, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative flex flex-col h-full max-h-[92vh] w-full max-w-6xl rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden">
-        {/* Modal Top Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/90 backdrop-blur-md z-10">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-600/30">
-              <span className="text-xl">⚽</span>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-white">Your Customized 3D Football</h2>
-                <span className="rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold">
-                  32 Meshes Active
-                </span>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent
+        hideClose={true}
+        className="max-w-6xl w-[96vw] h-[92dvh] p-0 gap-0 border-zinc-800 bg-zinc-950 overflow-hidden flex flex-col rounded-xl sm:rounded-2xl"
+      >
+        {/* Header Bar */}
+        <DialogHeader className="px-3 sm:px-6 py-2.5 sm:py-3 border-b border-zinc-800 bg-zinc-900/70 backdrop-blur-md flex flex-row items-center justify-between space-y-0 shrink-0">
+          {/* Left Title Area */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 pr-2">
+            <span className="text-lg sm:text-xl shrink-0">⚽</span>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <DialogTitle className="text-xs sm:text-sm font-semibold text-white truncate">
+                  3D Match Ball Studio
+                </DialogTitle>
+                <Badge variant="outline" className="border-zinc-700 bg-zinc-800/60 text-zinc-300 text-[10px] hidden xs:inline-flex">
+                  32 Meshes
+                </Badge>
               </div>
-              <p className="text-xs text-slate-400">
-                Interactive 3D preview with PBR studio lighting, rotate 360°, and zoom
-              </p>
+              <DialogDescription className="text-xs text-zinc-400 mt-0.5 hidden sm:block truncate">
+                Full-fidelity 360° interactive preview with studio lighting and physics normal map.
+              </DialogDescription>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            {/* Snapshot Download Button */}
-            <button
+          {/* Right Action Cluster: Save Button + Close Button perfectly aligned */}
+          <div className="flex items-center gap-2 shrink-0">
+            <Button
+              type="button"
+              variant="default"
+              size="sm"
               onClick={handleDownloadSnapshot}
-              className="flex items-center gap-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-2 text-xs font-bold transition shadow-md shadow-indigo-600/20 active:scale-95 cursor-pointer"
+              className="h-8 px-2.5 sm:px-3 text-xs gap-1.5 bg-white text-zinc-900 hover:bg-zinc-100 cursor-pointer active:scale-95 shadow-2xs font-semibold"
             >
-              <Download className="h-4 w-4" />
-              <span>{downloadSuccess ? 'Downloaded!' : 'Download Snapshot'}</span>
-            </button>
+              {downloadSuccess ? (
+                <>
+                  <Check className="h-3.5 w-3.5 text-emerald-600" />
+                  <span className="text-[11px]">Saved</span>
+                </>
+              ) : (
+                <>
+                  <Download className="h-3.5 w-3.5" />
+                  <span className="text-[11px]">Save</span>
+                </>
+              )}
+            </Button>
 
-            {/* Close Button */}
-            <button
-              onClick={onClose}
-              className="rounded-xl p-2 text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
-              title="Close 3D View"
-            >
-              <X className="h-5 w-5" />
-            </button>
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer active:scale-95"
+                title="Close 3D View"
+              >
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
+              </Button>
+            </DialogClose>
           </div>
-        </div>
+        </DialogHeader>
 
         {/* 3D Canvas Body */}
-        <div className="relative flex-1 w-full bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
+        <div className="relative flex-1 w-full bg-radial from-zinc-900 to-zinc-950 overflow-hidden">
           <FootballCanvas
             ref={canvasRef}
             isAutoRotating={isAutoRotating}
@@ -97,7 +107,7 @@ export default function Render3DModal({ isOpen, onClose }) {
             modelUrl="/models/circle-soccer-concave.glb"
           />
 
-          {/* Floating Orbit Controls */}
+          {/* Floating Controls */}
           <FootballControls
             isAutoRotating={isAutoRotating}
             onToggleAutoRotate={() => setIsAutoRotating((prev) => !prev)}
@@ -115,61 +125,7 @@ export default function Render3DModal({ isOpen, onClose }) {
             onToggleWireframe={() => setIsWireframe((prev) => !prev)}
           />
         </div>
-
-        {/* Modal Bottom Summary Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-3.5 border-t border-slate-800 bg-slate-950/90 text-xs text-slate-300">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">
-              <Layers className="h-3.5 w-3.5 text-indigo-400" />
-              <span className="font-semibold text-white">
-                {isSingle
-                  ? activePanelTitle ? `1 panel (${activePanelTitle})` : '0 panels'
-                  : `${selectedPanels.length} panels`}
-              </span>
-              <span className="text-slate-400">showing image</span>
-            </div>
-
-            {uploadedImage && (
-              <div className="flex items-center gap-2 bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">
-                <img
-                  src={uploadedImage.url}
-                  alt={uploadedImage.name}
-                  className="h-4 w-4 rounded object-cover"
-                />
-                <span className="font-medium text-white truncate max-w-[140px]">
-                  {uploadedImage.name}
-                </span>
-              </div>
-            )}
-          </div>
-
-          {/* Active Colors Swatches */}
-          <div className="flex items-center gap-3">
-            <span className="text-slate-400">Mesh Colors:</span>
-            <div className="flex items-center gap-1.5" title="Hexagons Color">
-              <span
-                className="h-3.5 w-3.5 rounded-full border border-slate-600"
-                style={{ backgroundColor: colorSettings.hexagonColor }}
-              />
-              <span className="text-[11px] text-slate-400">Hexagons</span>
-            </div>
-            <div className="flex items-center gap-1.5" title="Pentagons Color">
-              <span
-                className="h-3.5 w-3.5 rounded-full border border-slate-600"
-                style={{ backgroundColor: colorSettings.pentagonColor || colorSettings.circleColor }}
-              />
-              <span className="text-[11px] text-slate-400">Pentagons</span>
-            </div>
-            <div className="flex items-center gap-1.5" title="Seams Color">
-              <span
-                className="h-3.5 w-3.5 rounded-full border border-slate-600"
-                style={{ backgroundColor: colorSettings.seamsColor }}
-              />
-              <span className="text-[11px] text-slate-400">Seams</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }

@@ -396,32 +396,32 @@ const FootballCanvas = forwardRef(function FootballCanvas(
   }, [modelUrl, applyPanelMaterials])
 
   return (
-    <div className="relative h-full w-full select-none overflow-hidden rounded-2xl bg-gradient-to-b from-slate-100 via-slate-50 to-slate-200">
+    <div className="relative h-full w-full select-none overflow-hidden rounded-lg bg-radial from-zinc-900 to-zinc-950">
       {/* 3D Canvas */}
       <div ref={containerRef} className="h-full w-full cursor-grab active:cursor-grabbing" />
 
       {/* Loading Overlay */}
       {loading && (
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-white/85 backdrop-blur-sm">
-          <Loader2 className="h-9 w-9 animate-spin text-indigo-600 mb-2" />
-          <p className="text-sm font-bold text-slate-800">Loading 3D Football...</p>
-          <p className="text-xs text-slate-500">Preparing panels & materials ({loadProgress}%)</p>
+        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-zinc-950/90 backdrop-blur-xs text-white">
+          <Loader2 className="h-8 w-8 animate-spin text-zinc-400 mb-2" />
+          <p className="text-xs font-semibold text-zinc-200">Loading 3D Match Ball...</p>
+          <p className="text-[11px] text-zinc-500">Preparing 32 meshes ({loadProgress}%)</p>
         </div>
       )}
 
       {/* Error Overlay */}
       {error && (
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-rose-50/90 p-6 text-center">
-          <AlertTriangle className="h-10 w-10 text-rose-500 mb-2" />
-          <h3 className="text-sm font-bold text-rose-900">Failed to Load Model</h3>
-          <p className="mt-1 max-w-sm text-xs text-rose-700">{error}</p>
+        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-red-950/90 p-4 text-center">
+          <AlertTriangle className="h-8 w-8 text-red-400 mb-2" />
+          <h3 className="text-xs font-bold text-red-200">Failed to Load Model</h3>
+          <p className="mt-1 max-w-xs text-[11px] text-red-300">{error}</p>
         </div>
       )}
 
       {/* Camera interaction hint */}
-      <div className="pointer-events-none absolute top-4 left-4 z-10 flex items-center gap-2 rounded-xl bg-white/85 px-3 py-1.5 text-[11px] font-medium text-slate-700 shadow-xs backdrop-blur-md border border-slate-200/80">
-        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-        <span>360° Drag to rotate • Scroll to zoom</span>
+      <div className="pointer-events-none absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 flex items-center gap-1.5 rounded-md bg-zinc-950/80 px-2 py-1 text-[10px] sm:text-[11px] font-medium text-zinc-400 backdrop-blur-xs border border-zinc-800">
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <span>360° Drag • Pinch / Scroll Zoom</span>
       </div>
     </div>
   )
