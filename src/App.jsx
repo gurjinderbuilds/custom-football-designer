@@ -24,7 +24,7 @@ function CustomizerContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-50/50 text-zinc-900 selection:bg-zinc-900 selection:text-white">
-      {/* Athletic Studio Header */}
+      {/* Studio Header */}
       <Header />
 
       {/* Vertical Flow Main Content */}
@@ -36,16 +36,16 @@ function CustomizerContent() {
           {/* 3. Image Selection / Upload */}
           <ImageUploader />
 
-          {/* 4. Colors for Other Meshes & Seams */}
+          {/* 4. Colors for Leather, Laces & Seams */}
           <ColorCustomizer />
 
-          {/* 5. Direct 3D Match Ball Preview */}
+          {/* 5. Direct 3D American Football Preview */}
           <section className="flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-3.5 sm:p-5 shadow-2xs">
             <div className="flex items-center justify-between gap-2">
               <div>
-                <h2 className="text-sm font-semibold text-zinc-900">5. 3D Match Ball Preview</h2>
+                <h2 className="text-sm font-semibold text-zinc-900">5. 3D Football Preview</h2>
                 <p className="text-xs text-zinc-500 hidden xs:block">
-                  Interactive real-time 3D rendered ball. Rotate 360° to inspect alignment.
+                  Interactive real-time 3D rendered American football. Rotate 360° to inspect alignment.
                 </p>
               </div>
 
@@ -63,13 +63,14 @@ function CustomizerContent() {
               </Button>
             </div>
 
-            {/* Direct 3D Viewer Canvas - Scaled for mobile */}
+            {/* Direct 3D Viewer Canvas */}
             <div className="relative h-[300px] xs:h-[360px] sm:h-[460px] md:h-[500px] w-full rounded-lg overflow-hidden border border-zinc-800 bg-zinc-950">
               <FootballCanvas
                 ref={canvasRef}
                 isAutoRotating={isAutoRotating}
                 isWireframe={isWireframe}
-                modelUrl="/models/circle-soccer-concave.glb"
+                modelUrl="/models/American-football.obj"
+                mtlUrl="/models/American-football.mtl"
               />
 
               {/* Floating Orbit & Zoom Controls */}
@@ -95,10 +96,10 @@ function CustomizerContent() {
             <div className="flex flex-wrap items-center justify-between gap-1.5 text-xs text-zinc-500 pt-1">
               <span className="flex items-center gap-1.5 font-medium text-[11px]">
                 <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
-                <span>32 Meshes Active • Live Material Sync</span>
+                <span>4 Panels Active • Live Material Sync</span>
               </span>
               <Badge variant="outline" className="border-zinc-300 font-mono text-zinc-700 text-[10px]">
-                {selectedPanels.length} graphic mesh{selectedPanels.length === 1 ? '' : 'es'}
+                {selectedPanels.length} graphic panel{selectedPanels.length === 1 ? '' : 's'}
               </Badge>
             </div>
           </section>

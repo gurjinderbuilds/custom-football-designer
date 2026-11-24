@@ -3,6 +3,12 @@ import { PANELS_DATA } from '../data/panelsData'
 
 const CustomizationContext = createContext(null)
 
+const DEFAULT_COLORS = {
+  leatherColor: '#854d0e',
+  lacesColor: '#ffffff',
+  seamsColor: '#3b1d07'
+}
+
 export function CustomizationProvider({ children }) {
   // Step 1: Selection Mode ('single' or 'multiple')
   const [selectionMode, setSelectionModeState] = useState('single')
@@ -10,17 +16,12 @@ export function CustomizationProvider({ children }) {
   // Step 2: Selected Panels (strictly no default selection)
   const [selectedPanels, setSelectedPanels] = useState([])
 
-  // Step 3: Uploaded Image (strictly no default selection)
+  // Step 3: Uploaded Image
   const [uploadedImage, setUploadedImage] = useState(null)
   const [imageFit, setImageFit] = useState('cover')
 
-  // Step 4: Color Settings for other meshes & seams
-  const [colorSettings, setColorSettings] = useState({
-    hexagonColor: '#ffffff',
-    pentagonColor: '#1e293b',
-    circleColor: '#1e293b', // alias
-    seamsColor: '#0f172a'
-  })
+  // Step 4: Color Settings for leather, laces, and seams
+  const [colorSettings, setColorSettings] = useState(DEFAULT_COLORS)
 
   // Step 5: 3D Rendered Result Modal
   const [is3DModalOpen, setIs3DModalOpen] = useState(false)
@@ -50,19 +51,21 @@ export function CustomizationProvider({ children }) {
     })
   }, [selectionMode])
 
-  // Bulk selectors (only for multiple mode)
-  const selectAllHexagons = useCallback(() => {
-    const hexIds = PANELS_DATA.filter((p) => p.type === 'hexagon').map((p) => p.id)
-    setSelectedPanels(hexIds)
-  }, [])
-
-  const selectAllPentagons = useCallback(() => {
-    const pentIds = PANELS_DATA.filter((p) => p.type === 'pentagon').map((p) => p.id)
-    setSelectedPanels(pentIds)
-  }, [])
-
+  // Bulk selectors
   const selectAllPanels = useCallback(() => {
     setSelectedPanels(PANELS_DATA.map((p) => p.id))
+  }, [])
+
+  const selectLacePanels = useCallback(() => {
+    setSelectedPanels(['panel_1', 'panel_4'])
+  }, [])
+
+  const selectSidePanels = useCallback(() => {
+    setSelectedPanels(['panel_2', 'panel_4'])
+  }, [])
+
+  const selectTopBottomPanels = useCallback(() => {
+    setSelectedPanels(['panel_1', 'panel_3'])
   }, [])
 
   const clearSelection = useCallback(() => {
@@ -71,12 +74,7 @@ export function CustomizationProvider({ children }) {
 
   // Update color
   const updateColor = useCallback((key, value) => {
-    setColorSettings((prev) => {
-      const updated = { ...prev, [key]: value }
-      if (key === 'pentagonColor') updated.circleColor = value
-      if (key === 'circleColor') updated.pentagonColor = value
-      return updated
-    })
+    setColorSettings((prev) => ({ ...prev, [key]: value }))
   }, [])
 
   // Reset all
@@ -85,12 +83,7 @@ export function CustomizationProvider({ children }) {
     setSelectedPanels([])
     setUploadedImage(null)
     setImageFit('cover')
-    setColorSettings({
-      hexagonColor: '#ffffff',
-      pentagonColor: '#1e293b',
-      circleColor: '#1e293b',
-      seamsColor: '#0f172a'
-    })
+    setColorSettings(DEFAULT_COLORS)
     setIs3DModalOpen(false)
   }, [])
 
@@ -101,10 +94,10 @@ export function CustomizationProvider({ children }) {
     selectedPanels,
     setSelectedPanels,
     togglePanel,
-    selectAllHexagons,
-    selectAllPentagons,
-    selectAllCircles: selectAllPentagons,
     selectAllPanels,
+    selectLacePanels,
+    selectSidePanels,
+    selectTopBottomPanels,
     clearSelection,
     uploadedImage,
     setUploadedImage,

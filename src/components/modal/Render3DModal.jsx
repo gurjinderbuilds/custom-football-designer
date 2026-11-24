@@ -25,7 +25,7 @@ export default function Render3DModal({ isOpen, onClose }) {
     if (!dataUrl) return
 
     const link = document.createElement('a')
-    link.download = `custom-football-${Date.now()}.png`
+    link.download = `custom-american-football-${Date.now()}.png`
     link.href = dataUrl
     document.body.appendChild(link)
     link.click()
@@ -45,23 +45,23 @@ export default function Render3DModal({ isOpen, onClose }) {
         <DialogHeader className="px-3 sm:px-6 py-2.5 sm:py-3 border-b border-zinc-800 bg-zinc-900/70 backdrop-blur-md flex flex-row items-center justify-between space-y-0 shrink-0">
           {/* Left Title Area */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 pr-2">
-            <span className="text-lg sm:text-xl shrink-0">⚽</span>
+            <span className="text-lg sm:text-xl shrink-0">🏈</span>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <DialogTitle className="text-xs sm:text-sm font-semibold text-white truncate">
-                  3D Match Ball Studio
+                  American Football 3D Studio
                 </DialogTitle>
                 <Badge variant="outline" className="border-zinc-700 bg-zinc-800/60 text-zinc-300 text-[10px] hidden xs:inline-flex">
-                  32 Meshes
+                  4 Panels
                 </Badge>
               </div>
               <DialogDescription className="text-xs text-zinc-400 mt-0.5 hidden sm:block truncate">
-                Full-fidelity 360° interactive preview with studio lighting and physics normal map.
+                Full-fidelity 360° interactive preview with studio lighting, realistic leather, and cord laces.
               </DialogDescription>
             </div>
           </div>
 
-          {/* Right Action Cluster: Save Button + Close Button perfectly aligned */}
+          {/* Right Action Cluster: Save Button + Close Button */}
           <div className="flex items-center gap-2 shrink-0">
             <Button
               type="button"
@@ -104,7 +104,8 @@ export default function Render3DModal({ isOpen, onClose }) {
             ref={canvasRef}
             isAutoRotating={isAutoRotating}
             isWireframe={isWireframe}
-            modelUrl="/models/circle-soccer-concave.glb"
+            modelUrl="/models/American-football.obj"
+            mtlUrl="/models/American-football.mtl"
           />
 
           {/* Floating Controls */}
