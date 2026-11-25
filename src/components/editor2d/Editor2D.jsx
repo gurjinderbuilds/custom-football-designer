@@ -74,26 +74,24 @@ export default function Editor2D() {
             size="sm"
             variant={isSingle ? 'default' : 'ghost'}
             onClick={() => setSelectionMode('single')}
-            className={`h-8 sm:h-7 px-3 text-xs font-semibold ${
-              isSingle
+            className={`h-8 sm:h-7 px-3 text-xs font-semibold ${isSingle
                 ? 'bg-white text-zinc-900 shadow-2xs hover:bg-white'
                 : 'text-zinc-600 hover:text-zinc-900'
-            }`}
+              }`}
           >
-            Single Mesh
+            Single Panel
           </Button>
           <Button
             type="button"
             size="sm"
             variant={!isSingle ? 'default' : 'ghost'}
             onClick={() => setSelectionMode('multiple')}
-            className={`h-8 sm:h-7 px-3 text-xs font-semibold ${
-              !isSingle
+            className={`h-8 sm:h-7 px-3 text-xs font-semibold ${!isSingle
                 ? 'bg-white text-zinc-900 shadow-2xs hover:bg-white'
                 : 'text-zinc-600 hover:text-zinc-900'
-            }`}
+              }`}
           >
-            Multiple Meshes
+            Multiple Panels
           </Button>
         </div>
       </div>
@@ -114,11 +112,10 @@ export default function Editor2D() {
             size="sm"
             variant={viewMode === 'map' ? 'default' : 'ghost'}
             onClick={() => setViewMode('map')}
-            className={`h-7 px-2.5 text-xs gap-1.5 ${
-              viewMode === 'map'
+            className={`h-7 px-2.5 text-xs gap-1.5 ${viewMode === 'map'
                 ? 'bg-white text-zinc-900 shadow-2xs hover:bg-white'
                 : 'text-zinc-600 hover:text-zinc-900'
-            }`}
+              }`}
             title="Interactive 2D Flat Map"
           >
             <MapIcon className="h-3.5 w-3.5" />
@@ -129,11 +126,10 @@ export default function Editor2D() {
             size="sm"
             variant={viewMode === 'grid' ? 'default' : 'ghost'}
             onClick={() => setViewMode('grid')}
-            className={`h-7 px-2.5 text-xs gap-1.5 ${
-              viewMode === 'grid'
+            className={`h-7 px-2.5 text-xs gap-1.5 ${viewMode === 'grid'
                 ? 'bg-white text-zinc-900 shadow-2xs hover:bg-white'
                 : 'text-zinc-600 hover:text-zinc-900'
-            }`}
+              }`}
             title="Panel Roster Grid"
           >
             <Grid className="h-3.5 w-3.5" />
@@ -341,8 +337,8 @@ export default function Editor2D() {
                     {selectedPanels.includes(hoveredPanel)
                       ? 'Tap to deselect'
                       : isSingle
-                      ? 'Tap to select this mesh'
-                      : 'Tap to add'}
+                        ? 'Tap to select this mesh'
+                        : 'Tap to add'}
                   </span>
                 </span>
               ) : (
@@ -378,11 +374,10 @@ export default function Editor2D() {
                     key={p.id}
                     type="button"
                     onClick={() => togglePanel(p.id)}
-                    className={`relative flex flex-col items-center justify-center p-2 rounded-lg border text-center transition cursor-pointer min-h-[58px] active:scale-95 ${
-                      isSelected
+                    className={`relative flex flex-col items-center justify-center p-2 rounded-lg border text-center transition cursor-pointer min-h-[58px] active:scale-95 ${isSelected
                         ? 'border-zinc-900 bg-zinc-50 ring-1 ring-zinc-900 shadow-2xs'
                         : 'border-zinc-200 bg-white hover:border-zinc-300 hover:bg-zinc-50/60'
-                    }`}
+                      }`}
                   >
                     <div
                       className="h-7 w-7 rounded-md flex items-center justify-center text-[10px] font-mono font-bold mb-1 shadow-2xs"
@@ -421,11 +416,10 @@ export default function Editor2D() {
                     key={p.id}
                     type="button"
                     onClick={() => togglePanel(p.id)}
-                    className={`relative flex flex-col items-center justify-center p-2 rounded-lg border text-center transition cursor-pointer min-h-[58px] active:scale-95 ${
-                      isSelected
+                    className={`relative flex flex-col items-center justify-center p-2 rounded-lg border text-center transition cursor-pointer min-h-[58px] active:scale-95 ${isSelected
                         ? 'border-zinc-900 bg-zinc-50 ring-1 ring-zinc-900 shadow-2xs'
                         : 'border-zinc-200 bg-white hover:border-zinc-300 hover:bg-zinc-50/60'
-                    }`}
+                      }`}
                   >
                     <div
                       className="h-7 w-7 rounded-md flex items-center justify-center text-[10px] font-mono font-bold mb-1 shadow-2xs"
